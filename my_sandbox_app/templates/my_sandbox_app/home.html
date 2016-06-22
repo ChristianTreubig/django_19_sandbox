@@ -1,0 +1,32 @@
+{% load templatetags_main %}
+
+This is the home template.
+
+<div>
+	<a href="{% url "place_create" %}">Create a place</a>
+</div>
+<div>
+	<a href="{% url "resident_create" %}">Create a resident</a>
+</div>
+
+
+<h1>
+	Created Places
+</h1>
+
+{% for place in places %}
+	<h2>{{ place.city|capfirst|replace_vowel_with_something:"*" }}, {{ place.state }}, {{ place.zip }}</h2>
+	{% for resident in place.resident_set.all %}
+		<div>
+			<a href="{% url "resident_update" resident.id %}">
+				{{ resident.first_name }} {{ resident.last_name }}, {{ resident.age }}
+			</a>
+		</div>
+	{% endfor %}
+{% endfor %}
+
+<h1>Old Guys</h1>
+
+{% for old_guy in old_guys %}
+	<div>{{ old_guy.first_name }} {{ old_guy.last_name }}, {{ old_guy.age }}</div>
+{% endfor %}
